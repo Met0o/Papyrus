@@ -1,0 +1,13 @@
+Flask
+jsonify
+langchain
+accelerate
+transformers
+sentence_transformers
+InstructorEmbedding
+psycopg2-binary
+pgvector
+python-dotenv
+scipy
+huggingface
+python-dotenv

@@ -1,0 +1,50 @@
+services:
+  pgvector:
+    build: ./pgvector
+    image: pgvector:latest
+    container_name: pgvector
+    restart: always
+    environment:
+      - POSTGRES_USER=pgadmin
+      - POSTGRES_PASSWORD=pgadmin
+      - POSTGRES_DB=embeddings
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command: ["postgres", "-c", "shared_preload_libraries=vector"]
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    image: server:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
+    restart: always
+    volumes:
+      - model_cache:/root/.cache/
+    ports:
+      - "5000:5000"
+    depends_on:
+      - pgvector
+
+  UI:
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+    image: ui:latest
+    restart: always
+    ports:
+      - "8501:8501"
+    depends_on:
+      - server
+
+volumes:
+  model_cache:
+  pgdata:
