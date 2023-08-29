@@ -33,6 +33,14 @@ Deployment configuration can be customized from the docker-compose.yml and indiv
 
 ## Usage
 
+You can build your own vector store using pgvector and the DocumentParser.py file. The embedding model I am using is thenlper/gte-large which proved to be the best fit for the pgvector as it uses 1024 vector length and enables for a hybrid model of operation.
+
+Once containers are up and running, connect to the postgres from terminal/docker or your db client of choice and run: 
+
+```bash
+CREATE EXTENSION vector;
+```
+
 1. Navigate to the project directory:
    ```bash
    cd path-to-your-directory/Papyrus
