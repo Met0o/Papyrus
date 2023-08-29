@@ -3,7 +3,7 @@
 
 Papyrus is an app built on Flask that is designed to extract and fetch information from vectorized documents stored in a pgvector database. It does this by utilizing langchain and transformer models. Also, the application has a feature that enable users to interact directly with the model through the Streamlit UI.
 
-For optimal performance, this code is meant to operate inside a Docker container that supports GPU. Out of the box, Papyrus is set up to download and use the latest and fastest open-source model as of August 2023: the Stable-Platypus2-13B. With the help of Bitsandbytes and 4-bit quantization it is possible for this model to run on just under 14GB of VRAM. Alternatively, the Llama-2-7B model is also compatible and can fit in under 10GB of VRAM.
+For optimal performance, this code is meant to operate inside a Docker container that supports GPU. Out of the box, Papyrus is set up to download and use the latest and fastest open-source model as of August 2023: the Stable-Platypus2-13B. With the help of Bitsandbytes and 4-bit quantization it is possible for this model to run on just under 14GB of VRAM. Alternatively, the Llama-2-7b-chat-hf model is also compatible and can fit in under 10GB of VRAM.
 
 ## Table of Contents
 
