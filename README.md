@@ -71,9 +71,3 @@ Docker containers can be created under Windows and Linux, no OS restrictions.
 - `/interact`: POST endpoint for inference without using embedded documents.
 - `/collections`: GET endpoint to retrieve available collections.
 - `/status`: GET endpoint to check the status of the model and device.
-
-## Contact
-
-metodi.simeonov@gmail.com
-
-Project Link: [https://github.com/Met0o/Papyrus](https://github.com/Met0o/Papyrus)
