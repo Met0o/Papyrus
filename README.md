@@ -1,10 +1,10 @@
 
 # Papyrus
 
-This is a Flask-based application designed to process and retrieve relevant information from documents using transformer models. The application can also be used for direct model interaction with selection from the controls.
+Papyrus is an app built on Flask that is designed to extract and fetch information from vectorized documents stored in a pgvector database. It does this by utilizing langchain and transformer models. Also, the application has a feature that enable users to interact directly with the model through the Streamlit UI.
 
-This code is intended to run within Docker container with available GPU. By default, the application is configured to download and deploy the fastest (as of August 2023) 13B open-source model - Stable-Platypus2-13B. Thanks to Bitsandbytes, 4bit quantization makes the model fit into under 14GB VRAM. Llama-2-7B can be
- 
+For optimal performance, this code is meant to operate inside a Docker container that supports GPU. Out of the box, Papyrus is set up to download and use the latest and fastest open-source model as of August 2023: the Stable-Platypus2-13B. With the help of Bitsandbytes and 4-bit quantization it is possible for this model to run on just under 14GB of VRAM. Alternatively, the Llama-2-7B model is also compatible and can fit in under 10GB of VRAM.
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -20,53 +20,50 @@ This code is intended to run within Docker container with available GPU. By defa
 
 ### Prerequisites
 
-- Python 3.10
-- Required Libraries: Flask, transformers, torch, accelerate, bitsandbytes (compiled from source), langchain, psycopg2-binary, python-dotenv
-- Identical version of CUDA (11.8) for both Torch and the docker image.
+- Docker and Docker Compose installed.
+- An environment with NVIDIA GPU.
 
 ### Installation
 
-1. Clone the repo:
+Deployment configuration can be customized from the docker-compose.yml and individual Dockerfiles. CUDA version is set to 11.8 for Torch, Docker image, and Bitsandbytes which is compiled at first container runtime.
+
+1. Clone the repository:
    ```bash
    git clone https://github.com/Met0o/local-llama2-gpu
-   ```
-2. Install Python packages:
-   ```bash
-   pip install Flask transformers torch accelerate bitsandbytes langchain psycopg2-binary python-dotenv
-   ```
 
 ## Usage
 
 1. Navigate to the project directory:
    ```bash
-   cd path-to-your-directory/documentqna/app/refactored
+   cd path-to-your-directory/Papyrus
    ```
 
-2. Run the application:
+2. Build the Docker images:
    ```bash
-   python main.py
+   docker-compose build
    ```
 
-3. The application will be available at `http://localhost:5000/`.
+2. Start the application using Docker Compose:
+   ```bash
+   docker-compose up
+   ```
+
+3. The application will be available at http://localhost:5000/ and the UI at http://localhost:8501/.
+
+## Usage
+
+Use the .env file to set environment variables as needed.
+Docker containers can be created under Windows and Linux, no OS restrictions.
 
 ## Endpoints
 
-- `/predict`: POST endpoint for prediction based on input data.
+- `/predict`: POST endpoint for prediction based on embedded documents.
+- `/interact`: POST endpoint for inference without using embedded documents.
 - `/collections`: GET endpoint to retrieve available collections.
 - `/status`: GET endpoint to check the status of the model and device.
-
-## Contributing
-
-Any contributions are welcome.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## Contact
 
 metodi.simeonov@gmail.com
 
-Project Link: [https://github.com/Met0o/local-llama2-gpu](https://github.com/Met0o/local-llama2-gpu)
+Project Link: [https://github.com/Met0o/Papyrus](https://github.com/Met0o/Papyrus)
