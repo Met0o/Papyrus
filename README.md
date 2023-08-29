@@ -3,7 +3,7 @@
 
 Papyrus is an app built on Flask that is designed to extract and fetch information from vectorized documents stored in a pgvector database. It does this by utilizing langchain and transformer models. Also, the application has a feature that enable users to interact directly with the model through the Streamlit UI.
 
-For optimal performance, this code is meant to operate inside a Docker container that supports GPU. Out of the box, Papyrus is set up to download and use the latest and fastest open-source model as of August 2023: the Stable-Platypus2-13B. With the help of Bitsandbytes and 4-bit quantization it is possible for this model to run on just under 14GB of VRAM. Alternatively, the Llama-2-7b-chat-hf model is also compatible and can fit in under 10GB of VRAM.
+For optimal performance, this code is meant to operate inside a Docker container that supports GPU. Out of the box, Papyrus is set to download and use the latest and fastest open-source model as of August 2023: ```Stable-Platypus2-13B```. With the help of Bitsandbytes and 4-bit quantization it is possible for this model to run on just under 14GB of VRAM. Alternatively, ```Llama-2-7b-chat-hf``` is also compatible and can fit in 8-10GB of VRAM.
 
 ## Table of Contents
 
@@ -29,11 +29,13 @@ Deployment configuration can be customized from the docker-compose.yml and indiv
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Met0o/local-llama2-gpu
+   git clone https://github.com/Met0o/Papyrus
 
 ## Usage
 
-You can build your own vector store using pgvector and the DocumentParser.py file. The embedding model I am using is thenlper/gte-large which proved to be the best fit for the pgvector as it uses 1024 vector length and enables for a hybrid model of operation.
+You can build your own document RAG pipeline with a private vector store using the provision resources and with the help of ```DocumentParser.py```, you can vectorize and embed your PDF, docx, and csv files with ease. 
+
+The embedding model included in the configuration is the ```thenlper/gte-large``` which proved to be the best fit for the pgvector as it uses 1024 vector length and enables for a hybrid model of operation.
 
 Once containers are up and running, connect to the postgres from terminal/docker or your db client of choice and run: 
 
