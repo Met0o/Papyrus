@@ -33,6 +33,9 @@ Deployment configuration can be customized from the ```docker-compose.yml``` and
 
 ## Usage
 
+Use the .env file to set environment variables as needed.
+Docker containers can be created under Windows and Linux, so there are no OS restrictions.
+
 You can build your own document RAG pipeline with a private vector store using the provisioned resources. With the help of ```DocumentParser.py```, you can vectorize and embed your own PDF, docx, and csv files. 
 
 The embedding model included in the configuration is the ```thenlper/gte-large``` which proved to be the best fit for the ```pgvector``` as it uses 1024 vector length. Additionally, ```Postgres``` with ```pgvector``` extension enables for a hybrid model of operation - flat file structure and vectorized data.
@@ -59,11 +62,6 @@ The embedding model included in the configuration is the ```thenlper/gte-large``
 ```bash
 CREATE EXTENSION vector;
 ```
-
-## Usage
-
-Use the .env file to set environment variables as needed.
-Docker containers can be created under Windows and Linux, no OS restrictions.
 
 ## Endpoints
 
