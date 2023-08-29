@@ -1,9 +1,9 @@
 
 # Papyrus
 
-Papyrus is an app built on Flask that is designed to extract and fetch information from vectorized documents stored in a ```pgvector``` database. It does this by utilizing ```langchain``` and transformer models. Also, the application has a feature that enable users to interact directly with the model through an UI based on ```Streamlit```.
+Papyrus is an app built on Flask that is designed to extract and fetch information from vectorized documents stored in a `pgvector` database. It does this by utilizing `langchain` and transformer models. Also, the application has a feature that enable users to interact directly with the model through an UI based on `Streamlit`.
 
-For optimal performance, this code is meant to operate inside a Docker container that supports GPU. Out of the box, Papyrus is set to download and use the latest and fastest open-source model as of August 2023: ```Stable-Platypus2-13B```. With the help of Bitsandbytes and 4-bit quantization it is possible for this model to run on just under 14GB of VRAM. Alternatively, ```Llama-2-7b-chat-hf``` is also compatible and can fit in 8-10GB of VRAM.
+To ensure the best performance, the code is designed to run in a Docker container with GPU support. By default, Papyrus will download and use the fastest open-source model as of August 2023: `Stable-Platypus2-13B`. Thanks to `Bitsandbytes` and their 4-bit quantization, this model can operate using just under 14GB of VRAM. As an alternative, the `Llama-2-7b-chat-hf` model is compatible and requires between 8-10GB of VRAM.
 
 ## Table of Contents
 
@@ -12,9 +12,6 @@ For optimal performance, this code is meant to operate inside a Docker container
   - [Installation](#installation)
 - [Usage](#usage)
 - [Endpoints](#endpoints)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Getting Started
 
@@ -25,7 +22,7 @@ For optimal performance, this code is meant to operate inside a Docker container
 
 ### Installation
 
-Deployment configuration can be customized from the ```docker-compose.yml``` and individual ```Dockerfiles```. ```CUDA``` version is set to 11.8 for ```Torch```, Docker image, and ```Bitsandbytes``` which is compiled at first container runtime.
+Deployment configuration can be customized from the `docker-compose.yml` and individual `Dockerfiles`. `CUDA` version is set to 11.8 for `Torch`, Docker image, and `Bitsandbytes` which is compiled at first container runtime.
 
 1. Clone the repository:
    ```bash
@@ -36,9 +33,9 @@ Deployment configuration can be customized from the ```docker-compose.yml``` and
 Use the .env file to set environment variables as needed.
 Docker containers can be created under Windows and Linux, so there are no OS restrictions.
 
-You can build your own document RAG pipeline with a private vector store using the provisioned resources. With the help of ```DocumentParser.py```, you can vectorize and embed your own PDF, docx, and csv files. 
+You can build your own document RAG pipeline with a private vector store using the provisioned resources. With the help of `DocumentParser.py`, you can vectorize and embed your own PDF, docx, and csv files. 
 
-The embedding model included in the configuration is the ```thenlper/gte-large``` which proved to be the best fit for the ```pgvector``` as it uses 1024 vector length. Additionally, ```Postgres``` with ```pgvector``` extension enables for a hybrid model of operation - flat file structure and vectorized data.
+The embedding model included in the configuration is the `thenlper/gte-large` which proved to be the best fit for the `pgvector` as it uses 1024 vector length. Additionally, `Postgres` with `pgvector` extension enables for a hybrid model of operation - flat file structure and vectorized data.
 
 1. Navigate to the project directory:
    ```bash
@@ -65,7 +62,7 @@ CREATE EXTENSION vector;
 
 ## Endpoints
 
-- `/predict`: POST endpoint for prediction based on embedded documents.
-- `/interact`: POST endpoint for inference without using embedded documents.
-- `/collections`: GET endpoint to retrieve available collections.
-- `/status`: GET endpoint to check the status of the model and device.
+- `/predict`: A POST endpoint for inference based on embedded documents.
+- `/interact`: A POST endpoint for direct model interactions without the need for embedded documents.
+- `/collections`: A GET endpoint to list the available collections.
+- `/status`: A GET endpoint to verify the model's status and the device it's running on.
