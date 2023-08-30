@@ -89,10 +89,13 @@ The `thenlper/gte-large` embedding model, which utilizes a 1024-vector length, i
    docker-compose up
    ```
 
-4. The application will be available at: http://localhost:5000/ and the UI at http://localhost:8501/.
+4. The application will be available at: 
+   ```bash
+   server - http://localhost:5000/
+   us - http://localhost:8501/
+   ```
 
 5.  Once the containers are active, connect to `Postgres` through the terminal, Docker, or your preferred database client to enable the `pgvector` extension:
-
    ```bash
    CREATE EXTENSION vector;
    ```
