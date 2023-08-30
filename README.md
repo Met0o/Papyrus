@@ -111,8 +111,8 @@ The `thenlper/gte-large` embedding model, which utilizes a 1024-vector length, i
 
 There is a verbose app.log file recording all user-model interactions that is stored inside the `Server` container in Files -> app -> app.log.
 
-# Retrieval QA Chain
+## Retrieval QA Chain
 ![Image description](./img/Retrieval.png)
 
-# Direct Interaction
+## Direct Interaction
 ![Image description](./img/Interaction.png)
