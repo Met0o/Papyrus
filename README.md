@@ -12,8 +12,45 @@ To ensure the best performance, the code is designed to run in a Docker containe
   - [Installation](#installation)
 - [Usage](#usage)
 - [Endpoints](#endpoints)
+- [Debugging](#debugging)
 
 ## Getting Started
+
+Project structure:
+
+<pre>
+```
+│   docker-compose.yml
+|   LICENSE
+|   README.md
+|
+└───data-processing
+│   |   DocumentParser.py
+|
+└───pgvector
+|   |   Dockerfile
+|   |   Source folders
+|   |   Source files
+|
+└───server
+│   │   .env
+│   │   Dockerfile
+|   |   imports.py
+|   |   initialization.py
+|   |   main.py
+|   |   pipelines.py
+|   |   preprocessing.py
+|   |   requirements.py
+|   |   routes.py
+|   |   settings.py
+|
+└───ui
+    │   .Streamlit
+    │   Dockerfile
+    │   requirements.txt
+    │   webapp.py
+```
+</pre>
 
 ### Prerequisites
 
@@ -52,13 +89,13 @@ The `thenlper/gte-large` embedding model, which utilizes a 1024-vector length, i
    docker-compose up
    ```
 
-4. The application will be available at http://localhost:5000/ and the UI at http://localhost:8501/.
+4. The application will be available at: http://localhost:5000/ and the UI at http://localhost:8501/.
 
 5.  Once the containers are active, connect to `Postgres` through the terminal, Docker, or your preferred database client to enable the `pgvector` extension:
 
-```bash
-CREATE EXTENSION vector;
-```
+   ```bash
+   CREATE EXTENSION vector;
+   ```
 
 ## Endpoints
 
@@ -66,3 +103,13 @@ CREATE EXTENSION vector;
 - `/interact`: A POST endpoint for direct model interactions without the need for embedded documents.
 - `/collections`: A GET endpoint to list the available collections.
 - `/status`: A GET endpoint to verify the model's status and the device it's running on.
+
+## Debugging
+
+There is a verbose app.log file recording all user-model interactions that is stored inside the `Server` container in Files -> app -> app.log.
+
+# Retrieval QA Chain
+![Image description](./img/Retrieval.png)
+
+# Direct Interaction
+![Image description](./img/Interaction.png)
