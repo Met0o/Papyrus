@@ -63,21 +63,22 @@ if prompt := st.chat_input("Ask your question:"):
         try:
             if mode == "Document Retrieval":
                 response = requests.post("http://server:5000/predict", 
-                                         json={"input": prompt, 
-                                               "collection": selected_collection})
+                                        json={"input": prompt, 
+                                            "collection": selected_collection})
             else:
                 response = requests.post("http://server:5000/interact", 
-                                         json={"input": prompt})
+                                        json={"input": prompt})
+
             response_data = response.json()
-            
             answer = response_data.get("answer", "Please try again.")
-            pipeline_used = response_data.get("pipeline_used", "Unknown Pipeline")
-            
+
             if mode == "Document Retrieval":
+                pipeline_used = response_data.get("pipeline_used", "Unknown Pipeline")
                 source_documents = response_data["source_documents"]
             else:
+                pipeline_used = "Direct Interaction"
                 source_documents = []
-                
+
         except requests.exceptions.RequestException as e:
             answer = f"Error: Unable to connect to the server. {str(e)}"
             pipeline_used = "Unknown Pipeline"
