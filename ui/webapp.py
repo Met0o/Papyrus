@@ -4,26 +4,24 @@ import time
 import os
 
 MAX_RETRIES = 30
-RETRY_DELAY = 1
+RETRY_DELAY = 1  # seconds
 
 st.title("Papyrus")
+
 st.sidebar.title("Controls")
 
-if not st.session_state.get('model_loaded', False):
-    
-    info_message = st.sidebar.info("Please wait for model shards to be loaded into GPU memory...")
+info_message = st.sidebar.info("Please wait for model shards to be loaded into GPU memory...")
 
-    for _ in range(MAX_RETRIES):
-        try:
-            response = requests.get("http://server:5000/status")
-            if response.status_code == 200:
-                info_message.success("Model is ready!")
-                st.session_state.model_loaded = True
-                break
-        except requests.exceptions.ConnectionError:
-            time.sleep(RETRY_DELAY)
-    else:
-        st.error("Failed to establish connection to the server, please check the app log.")
+for _ in range(MAX_RETRIES):
+    try:
+        response = requests.get("http://server:5000/status")
+        if response.status_code == 200:
+            info_message.success("Model is ready!")
+            break
+    except requests.exceptions.ConnectionError:
+        time.sleep(RETRY_DELAY)
+else:
+    st.error("Failed to establish connection to the server, please check the app log.")
 
 response = requests.get("http://server:5000/status")
 status = response.json()
@@ -47,7 +45,7 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
-        if "sources" in message and mode == "Document Retrieval":
+        if "sources" in message and mode == "Document Retrieval": # Only display sources in Document Retrieval mode
             st.markdown("**Sources:**")
             for i, source in enumerate(message["sources"], start=1):
                 st.markdown(f"{i}. {source}")
@@ -92,9 +90,10 @@ if prompt := st.chat_input("Ask your question:"):
         st.sidebar.markdown(f"**Response time**: {round(elapsed_time, 2)} sec")
         st.sidebar.markdown(f"**Pipeline used:** {pipeline_used}")
 
+        st.markdown(answer)
+        
         if mode == "Document Retrieval":
             sources = list({os.path.basename(doc['metadata']['source']) for doc in source_documents})
-            st.markdown(answer)
             st.markdown("**Sources:**")
             for i, source in enumerate(sources, start=1):
                 st.markdown(f"{i}. {source}")
