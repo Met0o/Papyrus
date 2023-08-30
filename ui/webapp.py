@@ -4,24 +4,26 @@ import time
 import os
 
 MAX_RETRIES = 30
-RETRY_DELAY = 1  # seconds
+RETRY_DELAY = 1
 
 st.title("Papyrus")
-
 st.sidebar.title("Controls")
 
-info_message = st.sidebar.info("Please wait for model shards to be loaded into GPU memory...")
+if not st.session_state.get('model_loaded', False):
+    
+    info_message = st.sidebar.info("Please wait for model shards to be loaded into GPU memory...")
 
-for _ in range(MAX_RETRIES):
-    try:
-        response = requests.get("http://server:5000/status")
-        if response.status_code == 200:
-            info_message.success("Model is ready!")
-            break
-    except requests.exceptions.ConnectionError:
-        time.sleep(RETRY_DELAY)
-else:
-    st.error("Failed to establish connection to the server, please check the app log.")
+    for _ in range(MAX_RETRIES):
+        try:
+            response = requests.get("http://server:5000/status")
+            if response.status_code == 200:
+                info_message.success("Model is ready!")
+                st.session_state.model_loaded = True
+                break
+        except requests.exceptions.ConnectionError:
+            time.sleep(RETRY_DELAY)
+    else:
+        st.error("Failed to establish connection to the server, please check the app log.")
 
 response = requests.get("http://server:5000/status")
 status = response.json()
@@ -45,7 +47,7 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
-        if "sources" in message and mode == "Document Retrieval": # Only display sources in Document Retrieval mode
+        if "sources" in message and mode == "Document Retrieval":
             st.markdown("**Sources:**")
             for i, source in enumerate(message["sources"], start=1):
                 st.markdown(f"{i}. {source}")
