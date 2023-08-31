@@ -3,7 +3,7 @@ import streamlit as st
 import time
 import os
 
-MAX_RETRIES = 30
+MAX_RETRIES = 60
 RETRY_DELAY = 1
 
 st.title("Papyrus")
